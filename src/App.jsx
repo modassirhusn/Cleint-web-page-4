@@ -21,6 +21,7 @@ const BridgeRestaurant = () => {
         { id: 'home', label: 'Home' },
         { id: 'about', label: 'Our Story' },
         { id: 'menu', label: 'Menu' },
+        { id: 'wine', label: 'Wine Cellar' },
         { id: 'chef', label: 'The Chef' },
         { id: 'gallery', label: 'Gallery' },
         { id: 'reservations', label: 'Reservations' },
@@ -166,6 +167,7 @@ const BridgeRestaurant = () => {
                 </div>
             </div>
 
+
             <div className="bg-gradient-to-b from-black to-zinc-900 py-24">
                 <div className="max-w-7xl mx-auto px-6">
                     <motion.div
@@ -204,6 +206,30 @@ const BridgeRestaurant = () => {
                             </motion.div>
                         ))}
                     </div>
+                </div>
+            </div>
+
+            {/* Added Section Spacing */}
+            <div className="py-32 bg-black"></div>
+
+            {/* Space and Video 1 */}
+            <div className="my-32">
+                <div className="max-w-7xl mx-auto px-6">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 1 }}
+                        className="relative h-[600px] overflow-hidden rounded-3xl group shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-white/5"
+                    >
+                        <video className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" autoPlay loop muted playsInline>
+                            <source src="/videos/mixkit-empty-restaurant-with-nice-lighting-29050-hd-ready.mp4" type="video/mp4" />
+                        </video>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
+                        <div className="absolute bottom-12 left-12">
+                            <span className="text-amber-400 tracking-[0.4em] uppercase text-sm mb-4 block">Cinematic Experience</span>
+                            <h3 className="text-5xl font-serif text-white leading-tight">Authentic <br />Atmosphere</h3>
+                        </div>
+                    </motion.div>
                 </div>
             </div>
 
@@ -253,6 +279,145 @@ const BridgeRestaurant = () => {
                                 alt="Dish"
                             />
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Added Section Spacing */}
+            <div className="py-32 bg-black"></div>
+
+            {/* Video Insertion 2: Service */}
+            <div className="py-24 bg-black">
+                <div className="max-w-7xl mx-auto px-6">
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1 }}
+                        className="relative h-[600px] overflow-hidden rounded-3xl group border border-amber-500/10"
+                    >
+                        <video className="w-full h-full object-cover" autoPlay loop muted playsInline>
+                            <source src="/videos/mixkit-waiter-serving-meat-stew-in-a-restaurant-4672-full-hd.mp4" type="video/mp4" />
+                        </video>
+                        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-500"></div>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.5 }}
+                            >
+                                <h3 className="text-5xl font-serif text-white mb-4">Dedicated Service</h3>
+                                <div className="w-32 h-1 bg-amber-500 mx-auto"></div>
+                                <p className="mt-6 text-xl text-amber-100/80 max-w-xl">Where every detail is polished to perfection and every moment is crafted for your delight.</p>
+                            </motion.div>
+                        </div>
+                    </motion.div>
+                </div>
+            </div>
+
+            {/* New Expanded Section: Culinary Philosophy */}
+            <div className="bg-zinc-950 py-32 overflow-hidden">
+                <div className="max-w-7xl mx-auto px-6">
+                    <div className="grid lg:grid-cols-2 gap-24 items-center">
+                        <motion.div
+                            initial={{ opacity: 0, x: 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="order-2 lg:order-1"
+                        >
+                            <h2 className="text-5xl font-serif text-white mb-12">The Culinary Philosophy</h2>
+                            <div className="space-y-12">
+                                {[
+                                    { num: '01', title: 'Global Inspiration', desc: 'Sourcing the rarest seasonal ingredients from small-scale artisans across continents.' },
+                                    { num: '02', title: 'Technical Mastery', desc: 'Where molecular gastronomy meets thousand-year-old traditional techniques.' },
+                                    { num: '03', title: 'Visual Poetry', desc: 'Every plate is a canvas, designed to evoke emotion through color, texture, and form.' }
+                                ].map((item, i) => (
+                                    <div key={i} className="flex gap-8 group">
+                                        <span className="text-4xl font-serif text-amber-500/30 group-hover:text-amber-500 transition-colors duration-500">{item.num}</span>
+                                        <div>
+                                            <h4 className="text-2xl font-serif text-white mb-2">{item.title}</h4>
+                                            <p className="text-zinc-400 text-lg leading-relaxed">{item.desc}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, x: -50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="relative order-1 lg:order-2"
+                        >
+                            <div className="relative z-10 rounded-2xl overflow-hidden border border-white/10">
+                                <img src="/images/chef-1.jpg" alt="Chef at work" className="w-full h-[700px] object-cover" />
+                            </div>
+                            <div className="absolute -top-12 -right-12 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl"></div>
+                            <div className="absolute -bottom-12 -left-12 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl"></div>
+                        </motion.div>
+                    </div>
+                </div>
+            </div>
+            {/* Enlarged Content Section */}
+            <div className="bg-black py-40 my-24 border-y border-white/5">
+                <div className="max-w-7xl mx-auto px-6 text-center">
+                    <h2 className="text-6xl font-serif text-white mb-16">Guest Reviews</h2>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+                        {[
+                            { n: "Julianne Moore", t: "The Bridge is more than a restaurant; it's a sensory pilgrimage. Every dish is a chapter in a story of flavor." },
+                            { n: "Robert Chen", t: "The attention to detail here is unparalleled. From the lighting to the service, everything is orchestrated to perfection." },
+                            { n: "Sarah Jenkins", t: "Technically flawless and emotionally resonant. One of the few places where innovation serves the flavor." }
+                        ].map((rev, i) => (
+                            <div key={i} className="bg-zinc-900/50 p-12 border border-white/5 rounded-3xl hover:border-amber-500/30 transition-all duration-500 group">
+                                <Star className="text-amber-500 w-6 h-6 mb-6 fill-current" />
+                                <p className="text-zinc-300 text-lg italic leading-relaxed mb-8">"{rev.t}"</p>
+                                <h4 className="text-white font-serif text-xl">— {rev.n}</h4>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            {/* New Section: Private Events */}
+            <div className="relative py-48 bg-zinc-950 overflow-hidden">
+                <div className="max-w-7xl mx-auto px-6 relative z-10">
+                    <div className="grid lg:grid-cols-2 gap-16 items-center">
+                        <motion.div
+                            initial={{ opacity: 0, x: -50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="space-y-8"
+                        >
+                            <h2 className="text-6xl font-serif text-white leading-tight">Host Your Unforgettable Moments</h2>
+                            <p className="text-xl text-zinc-400 leading-relaxed">
+                                From intimate celebrations to grand corporate galas, our dedicated events team ensures every detail reflects your vision with the signature elegance of The Bridge.
+                            </p>
+                            <div className="grid grid-cols-2 gap-8 py-6">
+                                <div>
+                                    <h4 className="text-amber-500 font-serif text-2xl mb-2">500+</h4>
+                                    <p className="text-zinc-500 text-sm tracking-widest uppercase">Events Hosted</p>
+                                </div>
+                                <div>
+                                    <h4 className="text-amber-500 font-serif text-2xl mb-2">120</h4>
+                                    <p className="text-zinc-500 text-sm tracking-widest uppercase">Max Capacity</p>
+                                </div>
+                            </div>
+                            <button
+                                onClick={() => setCurrentPage('reservations')}
+                                className="px-12 py-5 bg-white text-black font-medium tracking-[0.2em] uppercase hover:bg-amber-500 transition-colors duration-500"
+                            >
+                                Inquire Now
+                            </button>
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            className="relative"
+                        >
+                            <img src="/images/ambiance-1.jpg" alt="Event Space" className="rounded-2xl shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000" />
+                            <div className="absolute -bottom-8 -left-8 bg-amber-500 p-8 hidden md:block">
+                                <Star className="w-12 h-12 text-black" />
+                            </div>
+                        </motion.div>
                     </div>
                 </div>
             </div>
@@ -375,6 +540,69 @@ const BridgeRestaurant = () => {
                         Experience our chef's creativity with a specially curated 7-course journey. Each course paired with premium wines.
                     </p>
                     <p className="text-2xl text-amber-400 font-medium">₹8,500 per person</p>
+                </div>
+            </div>
+        </div>
+    );
+
+    const WinePage = () => (
+        <div className="min-h-screen bg-[#0a0a0a] pt-32 pb-24">
+            <div className="max-w-7xl mx-auto px-6">
+                <div className="text-center mb-24">
+                    <span className="text-amber-500 tracking-[0.5em] uppercase text-sm mb-4 block">The Sommelier's Choice</span>
+                    <h1 className="text-7xl font-serif text-white mb-6">Wine Cellar</h1>
+                    <div className="w-24 h-1 bg-amber-400 mx-auto"></div>
+                </div>
+
+                <div className="grid lg:grid-cols-2 gap-24 mb-32 items-center">
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                    >
+                        <h2 className="text-4xl font-serif text-white mb-8">A Collection of Rarities</h2>
+                        <p className="text-xl text-zinc-400 leading-relaxed mb-8">
+                            Our underground cellar houses over 2,000 bottles from the world's most prestigious vineyards. From vintage Champagnes to rare Bordeaux, each bottle is curated to complement our culinary offerings.
+                        </p>
+                        <div className="space-y-6">
+                            {[
+                                { title: 'Old World Classics', desc: 'Focusing on the heritage regions of France, Italy, and Spain.' },
+                                { title: 'New World Gems', desc: 'Handpicked selections from Napa, Mendoza, and Barossa.' },
+                                { title: 'Limited Editions', desc: 'Rare vintages and exclusive labels found nowhere else.' }
+                            ].map((item, i) => (
+                                <div key={i} className="flex gap-6 items-start">
+                                    <div className="w-12 h-12 bg-amber-500/10 flex items-center justify-center flex-shrink-0">
+                                        <Wine className="text-amber-500" />
+                                    </div>
+                                    <div>
+                                        <h4 className="text-xl text-white font-serif">{item.title}</h4>
+                                        <p className="text-zinc-500">{item.desc}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </motion.div>
+                    <div className="relative">
+                        <img src="/images/gallery-3.jpg" className="rounded-2xl grayscale h-[600px] w-full object-cover" alt="Wine Cellar" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-2xl"></div>
+                    </div>
+                </div>
+
+                <div className="bg-zinc-900/40 p-16 rounded-3xl border border-white/5">
+                    <h3 className="text-3xl font-serif text-white mb-12 text-center">Featured Vintages</h3>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {[
+                            { name: 'Château Margaux', year: '2015', region: 'Bordeaux, France', price: '₹45,000' },
+                            { name: 'Sassicaia', year: '2018', region: 'Tuscany, Italy', price: '₹32,000' },
+                            { name: 'Opus One', year: '2019', region: 'Napa Valley, USA', price: '₹38,000' }
+                        ].map((wine, i) => (
+                            <div key={i} className="p-8 border-b border-white/10 hover:bg-white/5 transition-colors">
+                                <span className="text-amber-500 font-serif mb-2 block">{wine.year}</span>
+                                <h4 className="text-2xl text-white font-serif mb-2">{wine.name}</h4>
+                                <p className="text-zinc-500 mb-4">{wine.region}</p>
+                                <span className="text-xl text-amber-100">{wine.price}</span>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
@@ -768,6 +996,7 @@ const BridgeRestaurant = () => {
         home: <HomePage />,
         about: <AboutPage />,
         menu: <MenuPage />,
+        wine: <WinePage />,
         chef: <ChefPage />,
         gallery: <GalleryPage />,
         reservations: <ReservationsPage />,
