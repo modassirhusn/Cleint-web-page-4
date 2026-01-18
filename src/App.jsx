@@ -6,14 +6,84 @@ const BridgeRestaurant = () => {
     const [currentPage, setCurrentPage] = useState('home');
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
-    const [selectedCategory, setSelectedCategory] = useState('all');
     const [lightboxImage, setLightboxImage] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState('all');
+    const [menuItems, setMenuItems] = useState({
+        starters: [
+            { name: "Grilled Octopus", description: "Cherry tomatoes, olives, fresh herbs", price: "₹1,850", image: "/images/dish-1.jpg" },
+            { name: "Burrata Salad", description: "Heirloom tomatoes, basil oil, aged balsamic", price: "₹1,650", image: "/images/dish-2.jpg" }
+        ],
+        mains: [
+            { name: "Aglio e Olio Pasta", description: "Fresh pasta, garlic, olive oil, cherry tomatoes", price: "₹1,950", image: "/images/dish-3.jpg" },
+            { name: "Pan-Seared Salmon", description: "Herb crust, seasonal vegetables, lemon butter", price: "₹2,850", image: "/images/dish-4.jpg" }
+        ],
+        desserts: [
+            { name: "Artisan Dessert", description: "Chef's special creation with seasonal fruits", price: "₹950", image: "/images/dish-5.jpg" }
+        ]
+    });
+    const [team, setTeam] = useState([
+        { name: 'Chef Alessandro Romano', role: 'Executive Chef', experience: '20+ years', specialty: 'Italian & Fusion Cuisine', image: '/images/chef-1.jpg' },
+        { name: 'Sofia Martinez', role: 'Sous Chef', experience: '12 years', specialty: 'Pastry & Desserts', image: '/images/chef-2.jpg' },
+        { name: 'Marcus Chen', role: 'Head Sommelier', experience: '15 years', specialty: 'Wine Pairing', image: '/images/chef-3.jpg' }
+    ]);
+    const [gallery, setGallery] = useState([
+        { _id: '1', category: 'ambiance', src: '/images/gallery-1.jpg' },
+        { _id: '2', category: 'food', src: '/images/gallery-2.jpg' },
+        { _id: '3', category: 'drinks', src: '/images/gallery-3.jpg' },
+        { _id: '4', category: 'ambiance', src: '/images/gallery-4.jpg' },
+        { _id: '5', category: 'food', src: '/images/gallery-5.jpg' },
+        { _id: '6', category: 'drinks', src: '/images/gallery-6.jpg' }
+    ]);
+    const [featuredWines, setFeaturedWines] = useState([
+        { name: 'Château Margaux', year: '2015', region: 'Bordeaux, France', price: '₹45,000', category: 'featured' },
+        { name: 'Sassicaia', year: '2018', region: 'Tuscany, Italy', price: '₹32,000', category: 'featured' },
+        { name: 'Opus One', year: '2019', region: 'Napa Valley, USA', price: '₹38,000', category: 'featured' }
+    ]);
+    const [reviews, setReviews] = useState([
+        { name: "Julianne Moore", text: "The Bridge is more than a restaurant; it's a sensory pilgrimage. Every dish is a chapter in a story of flavor." },
+        { name: "Robert Chen", text: "The attention to detail here is unparalleled. From the lighting to the service, everything is orchestrated to perfection." },
+        { name: "Sarah Jenkins", text: "Technically flawless and emotionally resonant. One of the few places where innovation serves the flavor." }
+    ]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
             setScrolled(window.scrollY > 50);
         };
         window.addEventListener('scroll', handleScroll);
+
+        // Fetch All Data
+        const fetchData = async () => {
+            try {
+                const [menuRes, teamRes, galleryRes, wineRes, reviewRes] = await Promise.all([
+                    fetch('http://localhost:5000/api/menu'),
+                    fetch('http://localhost:5000/api/team'),
+                    fetch('http://localhost:5000/api/gallery'),
+                    fetch('http://localhost:5000/api/wines'),
+                    fetch('http://localhost:5000/api/reviews')
+                ]);
+
+                const [menuData, teamData, galleryData, wineData, reviewData] = await Promise.all([
+                    menuRes.json(),
+                    teamRes.json(),
+                    galleryRes.json(),
+                    wineRes.json(),
+                    reviewRes.json()
+                ]);
+
+                setMenuItems(menuData);
+                setTeam(teamData);
+                setGallery(galleryData);
+                setFeaturedWines(wineData);
+                setReviews(reviewData);
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                setLoading(false);
+            }
+        };
+        fetchData();
+
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
@@ -28,39 +98,10 @@ const BridgeRestaurant = () => {
         { id: 'contact', label: 'Contact' }
     ];
 
-    const menuItems = {
-        starters: [
-            { name: 'Grilled Octopus', description: 'Cherry tomatoes, olives, fresh herbs', price: '₹1,850', image: '/images/dish-1.jpg' },
-            { name: 'Burrata Salad', description: 'Heirloom tomatoes, basil oil, aged balsamic', price: '₹1,650', image: '/images/dish-2.jpg' }
-        ],
-        mains: [
-            { name: 'Aglio e Olio Pasta', description: 'Fresh pasta, garlic, olive oil, cherry tomatoes', price: '₹1,950', image: '/images/dish-3.jpg' },
-            { name: 'Pan-Seared Salmon', description: 'Herb crust, seasonal vegetables, lemon butter', price: '₹2,850', image: '/images/dish-4.jpg' }
-        ],
-        desserts: [
-            { name: 'Artisan Dessert', description: 'Chef\'s special creation with seasonal fruits', price: '₹950', image: '/images/dish-5.jpg' }
-        ]
-    };
-
-    const team = [
-        { name: 'Chef Alessandro Romano', role: 'Executive Chef', experience: '20+ years', specialty: 'Italian & Fusion Cuisine', image: '/images/chef-1.jpg' },
-        { name: 'Sofia Martinez', role: 'Sous Chef', experience: '12 years', specialty: 'Pastry & Desserts', image: '/images/chef-2.jpg' },
-        { name: 'Marcus Chen', role: 'Head Sommelier', experience: '15 years', specialty: 'Wine Pairing', image: '/images/chef-3.jpg' }
-    ];
-
-    const gallery = [
-        { id: 1, category: 'ambiance', src: '/images/gallery-1.jpg' },
-        { id: 2, category: 'food', src: '/images/gallery-2.jpg' },
-        { id: 3, category: 'drinks', src: '/images/gallery-3.jpg' },
-        { id: 4, category: 'ambiance', src: '/images/gallery-4.jpg' },
-        { id: 5, category: 'food', src: '/images/gallery-5.jpg' },
-        { id: 6, category: 'drinks', src: '/images/gallery-6.jpg' }
-    ];
-
     const NavBar = () => (
         <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'bg-black/90 backdrop-blur-lg py-4' : 'bg-transparent py-6'}`}>
             <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-                <div className="text-2xl font-serif text-amber-400 tracking-wider">The Bridge</div>
+                <div className="text-2xl font-serif text-amber-400 tracking-wider">The Meal</div>
 
                 <div className="hidden md:flex items-center gap-8">
                     {navigation.map(item => (
@@ -127,10 +168,19 @@ const BridgeRestaurant = () => {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, delay: 0.4 }}
-                        className="text-7xl md:text-8xl font-serif text-white mb-6 tracking-wide"
+                        className="text-7xl md:text-8xl font-serif text-white mb-2 tracking-wide"
                     >
-                        The Bridge
+                        The Meal
                     </motion.h1>
+
+                    <motion.p
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1, delay: 0.5 }}
+                        className="text-lg md:text-xl text-amber-400/80 mb-6 font-light italic"
+                    >
+                        by Md Modassir Hussain
+                    </motion.p>
 
                     <motion.p
                         initial={{ opacity: 0, y: 30 }}
@@ -361,15 +411,11 @@ const BridgeRestaurant = () => {
                 <div className="max-w-7xl mx-auto px-6 text-center">
                     <h2 className="text-6xl font-serif text-white mb-16">Guest Reviews</h2>
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
-                        {[
-                            { n: "Julianne Moore", t: "The Bridge is more than a restaurant; it's a sensory pilgrimage. Every dish is a chapter in a story of flavor." },
-                            { n: "Robert Chen", t: "The attention to detail here is unparalleled. From the lighting to the service, everything is orchestrated to perfection." },
-                            { n: "Sarah Jenkins", t: "Technically flawless and emotionally resonant. One of the few places where innovation serves the flavor." }
-                        ].map((rev, i) => (
+                        {reviews.map((rev, i) => (
                             <div key={i} className="bg-zinc-900/50 p-12 border border-white/5 rounded-3xl hover:border-amber-500/30 transition-all duration-500 group">
                                 <Star className="text-amber-500 w-6 h-6 mb-6 fill-current" />
-                                <p className="text-zinc-300 text-lg italic leading-relaxed mb-8">"{rev.t}"</p>
-                                <h4 className="text-white font-serif text-xl">— {rev.n}</h4>
+                                <p className="text-zinc-300 text-lg italic leading-relaxed mb-8">"{rev.text}"</p>
+                                <h4 className="text-white font-serif text-xl">— {rev.name}</h4>
                             </div>
                         ))}
                     </div>
@@ -590,11 +636,7 @@ const BridgeRestaurant = () => {
                 <div className="bg-zinc-900/40 p-16 rounded-3xl border border-white/5">
                     <h3 className="text-3xl font-serif text-white mb-12 text-center">Featured Vintages</h3>
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {[
-                            { name: 'Château Margaux', year: '2015', region: 'Bordeaux, France', price: '₹45,000' },
-                            { name: 'Sassicaia', year: '2018', region: 'Tuscany, Italy', price: '₹32,000' },
-                            { name: 'Opus One', year: '2019', region: 'Napa Valley, USA', price: '₹38,000' }
-                        ].map((wine, i) => (
+                        {featuredWines.map((wine, i) => (
                             <div key={i} className="p-8 border-b border-white/10 hover:bg-white/5 transition-colors">
                                 <span className="text-amber-500 font-serif mb-2 block">{wine.year}</span>
                                 <h4 className="text-2xl text-white font-serif mb-2">{wine.name}</h4>
@@ -660,9 +702,9 @@ const BridgeRestaurant = () => {
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-6">
-                    {gallery.map((item) => (
+                    {gallery.map((item, idx) => (
                         <div
-                            key={item.id}
+                            key={item._id || idx}
                             onClick={() => setLightboxImage(item.src)}
                             className="relative overflow-hidden group cursor-pointer h-80"
                         >
@@ -702,10 +744,21 @@ const BridgeRestaurant = () => {
         });
         const [submitted, setSubmitted] = useState(false);
 
-        const handleSubmit = (e) => {
+        const handleSubmit = async (e) => {
             e.preventDefault();
-            setSubmitted(true);
-            setTimeout(() => setSubmitted(false), 3000);
+            try {
+                const response = await fetch('http://localhost:5000/api/reservations', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                if (response.ok) {
+                    setSubmitted(true);
+                    setTimeout(() => setSubmitted(false), 3000);
+                }
+            } catch (error) {
+                console.error('Error submitting reservation:', error);
+            }
         };
 
         return (
@@ -903,20 +956,46 @@ const BridgeRestaurant = () => {
 
                     <div className="bg-white/5 backdrop-blur-sm p-8">
                         <h3 className="text-3xl font-serif text-white mb-6">Send us a Message</h3>
-                        <form className="space-y-6">
+                        <form
+                            className="space-y-6"
+                            onSubmit={async (e) => {
+                                e.preventDefault();
+                                const formData = {
+                                    name: e.target[0].value,
+                                    email: e.target[1].value,
+                                    message: e.target[2].value
+                                };
+                                try {
+                                    const response = await fetch('http://localhost:5000/api/contact', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify(formData)
+                                    });
+                                    if (response.ok) {
+                                        alert('Message sent successfully!');
+                                        e.target.reset();
+                                    }
+                                } catch (error) {
+                                    console.error('Error sending message:', error);
+                                }
+                            }}
+                        >
                             <input
                                 type="text"
                                 placeholder="Your Name"
+                                required
                                 className="w-full bg-white/10 border border-white/20 p-4 text-white placeholder-zinc-500 focus:border-amber-400 focus:outline-none transition-colors"
                             />
                             <input
                                 type="email"
                                 placeholder="Your Email"
+                                required
                                 className="w-full bg-white/10 border border-white/20 p-4 text-white placeholder-zinc-500 focus:border-amber-400 focus:outline-none transition-colors"
                             />
                             <textarea
                                 rows="6"
                                 placeholder="Your Message"
+                                required
                                 className="w-full bg-white/10 border border-white/20 p-4 text-white placeholder-zinc-500 focus:border-amber-400 focus:outline-none transition-colors resize-none"
                             ></textarea>
                             <button
@@ -944,7 +1023,7 @@ const BridgeRestaurant = () => {
             <div className="max-w-7xl mx-auto px-6">
                 <div className="grid md:grid-cols-4 gap-12 mb-12">
                     <div>
-                        <h3 className="text-2xl font-serif text-amber-400 mb-4">The Bridge</h3>
+                        <h3 className="text-2xl font-serif text-amber-400 mb-4">The Meal</h3>
                         <p className="text-zinc-400 text-sm leading-relaxed">
                             Where fine dining meets timeless elegance. An experience beyond the ordinary.
                         </p>
@@ -986,7 +1065,7 @@ const BridgeRestaurant = () => {
 
                 <div className="pt-8 border-t border-white/10 text-center">
                     <p className="text-zinc-500 text-sm italic">"Dining is not just food. It is an experience."</p>
-                    <p className="text-zinc-600 text-xs mt-4">© 2026 The Bridge. All rights reserved.</p>
+                    <p className="text-zinc-600 text-xs mt-4">© 2026 The Meal. All rights reserved.</p>
                 </div>
             </div>
         </footer>

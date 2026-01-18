@@ -1,0 +1,38 @@
+{
+    "starters": [
+        {
+            "name": "Grilled Octopus",
+            "description": "Cherry tomatoes, olives, fresh herbs",
+            "price": "₹1,850",
+            "image": "/images/dish-1.jpg"
+        },
+        {
+            "name": "Burrata Salad",
+            "description": "Heirloom tomatoes, basil oil, aged balsamic",
+            "price": "₹1,650",
+            "image": "/images/dish-2.jpg"
+        }
+    ],
+    "mains": [
+        {
+            "name": "Aglio e Olio Pasta",
+            "description": "Fresh pasta, garlic, olive oil, cherry tomatoes",
+            "price": "₹1,950",
+            "image": "/images/dish-3.jpg"
+        },
+        {
+            "name": "Pan-Seared Salmon",
+            "description": "Herb crust, seasonal vegetables, lemon butter",
+            "price": "₹2,850",
+            "image": "/images/dish-4.jpg"
+        }
+    ],
+    "desserts": [
+        {
+            "name": "Artisan Dessert",
+            "description": "Chef's special creation with seasonal fruits",
+            "price": "₹950",
+            "image": "/images/dish-5.jpg"
+        }
+    ]
+}
