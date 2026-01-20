@@ -744,6 +744,9 @@ const BridgeRestaurant = () => {
         });
         const [submitted, setSubmitted] = useState(false);
 
+        // Get today's date in YYYY-MM-DD format for date restriction
+        const today = new Date().toISOString().split('T')[0];
+
         const handleSubmit = async (e) => {
             e.preventDefault();
             try {
@@ -810,12 +813,15 @@ const BridgeRestaurant = () => {
                                     <div>
                                         <label className="block text-white mb-2">Phone</label>
                                         <input
-                                            type="tel"
+                                            type="text"
                                             required
                                             value={formData.phone}
-                                            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                                            onChange={(e) => {
+                                                const val = e.target.value.replace(/\D/g, '');
+                                                setFormData({ ...formData, phone: val });
+                                            }}
                                             className="w-full bg-white/10 border border-white/20 p-4 text-white focus:border-amber-400 focus:outline-none transition-colors"
-                                            placeholder="+91 98765 43210"
+                                            placeholder="9876543210"
                                         />
                                     </div>
                                     <div>
@@ -823,9 +829,13 @@ const BridgeRestaurant = () => {
                                         <select
                                             value={formData.guests}
                                             onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
-                                            className="w-full bg-white/10 border border-white/20 p-4 text-white focus:border-amber-400 focus:outline-none transition-colors"
+                                            className="w-full bg-white/10 border border-white/20 p-4 text-white focus:border-amber-400 focus:outline-none focus:bg-zinc-900 transition-colors"
                                         >
-                                            {[1, 2, 3, 4, 5, 6, 7, 8].map(n => <option key={n} value={n}>{n} {n === 1 ? 'Guest' : 'Guests'}</option>)}
+                                            {[1, 2, 3, 4, 5, 6, 7, 8].map(n => (
+                                                <option key={n} value={n} className="bg-zinc-900 text-white">
+                                                    {n} {n === 1 ? 'Guest' : 'Guests'}
+                                                </option>
+                                            ))}
                                         </select>
                                     </div>
                                 </div>
@@ -836,6 +846,7 @@ const BridgeRestaurant = () => {
                                         <input
                                             type="date"
                                             required
+                                            min={today}
                                             value={formData.date}
                                             onChange={(e) => setFormData({ ...formData, date: e.target.value })}
                                             className="w-full bg-white/10 border border-white/20 p-4 text-white focus:border-amber-400 focus:outline-none transition-colors"
@@ -846,17 +857,12 @@ const BridgeRestaurant = () => {
                                         <select
                                             value={formData.time}
                                             onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-                                            className="w-full bg-white/10 border border-white/20 p-4 text-white focus:border-amber-400 focus:outline-none transition-colors"
+                                            className="w-full bg-white/10 border border-white/20 p-4 text-white focus:border-amber-400 focus:outline-none focus:bg-zinc-900 transition-colors"
                                         >
-                                            <option value="">Select Time</option>
-                                            <option value="18:00">6:00 PM</option>
-                                            <option value="18:30">6:30 PM</option>
-                                            <option value="19:00">7:00 PM</option>
-                                            <option value="19:30">7:30 PM</option>
-                                            <option value="20:00">8:00 PM</option>
-                                            <option value="20:30">8:30 PM</option>
-                                            <option value="21:00">9:00 PM</option>
-                                            <option value="21:30">9:30 PM</option>
+                                            <option value="" className="bg-zinc-900 text-white">Select Time</option>
+                                            {["18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30"].map(t => (
+                                                <option key={t} value={t} className="bg-zinc-900 text-white">{t.replace(':', ' : ')} PM</option>
+                                            ))}
                                         </select>
                                     </div>
                                 </div>
@@ -900,8 +906,8 @@ const BridgeRestaurant = () => {
                             <p className="text-zinc-400 text-sm">+91 98765 43210</p>
                         </div>
                     </div>
-                </div>
-            </div>
+                </div >
+            </div >
         );
     };
 
